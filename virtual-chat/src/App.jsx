@@ -7,6 +7,7 @@ const socket = io("/");
 export default function App() {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const[username, setUsername] = useState("")
 
   useEffect(() => {
     socket.on("message", receiveMessage)
