@@ -7,7 +7,7 @@ export default defineConfig({
   server:{
     proxy:{
       '/socket.io':{
-        target:'https://virtual-chat.onrender.com/',
+        target:'https://virtual-chat.onrender.com',
         ws:true
       }
     }
