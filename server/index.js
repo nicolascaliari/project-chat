@@ -7,7 +7,6 @@ import { resolve, dirname } from "path";
 import { PORT } from "./config.js";
 import cors from "cors";
 
-// Initializations
 const app = express();
 const server = http.createServer(app);
 const io = new SocketServer(server, {
@@ -16,7 +15,7 @@ const io = new SocketServer(server, {
   },
 });
 
-// Middlewares
+
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
