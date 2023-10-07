@@ -20,8 +20,7 @@ const io = new SocketServer(server, {
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
-
-app.use(express.static(resolve("virtual-chat/dist")));
+app.use(express.static(resolve("client/dist")));
 
 io.on("connection", (socket) => {
   console.log(socket.id);

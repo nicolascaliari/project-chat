@@ -5,7 +5,9 @@
   "main": "index.js",
   "type":"module",
   "scripts": {
-    "dev": "nodemon server/index.js --ignore virtual-chat"
+    "start":"node server/index.js",
+    "dev": "nodemon server/index.js --ignore client",
+    "build":"npm run --prefix client build"
   },
   "keywords": [],
   "author": "",
