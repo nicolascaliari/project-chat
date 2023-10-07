@@ -1,30 +1,37 @@
-const express = require('express');
-const http = require('http');
-const { resolve, dirname } = require('path');
-const { Server } = require('socket.io');
-const { resolve, dirname } = require('path');
+import express from "express";
+import http from "http";
+import morgan from "morgan";
+import { Server as SocketServer } from "socket.io";
+import { resolve, dirname } from "path";
 
+import { PORT } from "./config.js";
+import cors from "cors";
+
+// Initializations
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new SocketServer(server, {
+  // cors: {
+  //   origin: "http://localhost:3000",
+  // },
+});
 
-
-const { PORT } = require('./config');
-
+// Middlewares
+app.use(cors());
+app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(resolve('virtual-chat/build')));
 
-io.on('connection', (socket) => {
-    console.log("Client connected");
+app.use(express.static(resolve("virtual-chat/dist")));
 
-    socket.on('message', (body) => {
-        socket.broadcast.emit('message', {
-            body,
-            from: socket.id.slice(6)
-        })
-    })
-})
+io.on("connection", (socket) => {
+  console.log(socket.id);
+  socket.on("message", (body) => {
+    socket.broadcast.emit("message", {
+      body,
+      from: socket.id.slice(8),
+    });
+  });
+});
 
-server.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`)
-})
+server.listen(PORT);
+console.log(`server on port ${PORT}`);
